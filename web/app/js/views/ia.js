@@ -3,12 +3,14 @@
 
 (function (P60) {
   const u = P60.u;
+  // Perguntas que a base Oracle consegue responder (casos, tratamentos, municipios, DRS, unidades).
   const SUGESTOES = [
-    'Quais municípios possuem maior percentual acima de 60 dias?',
-    'Qual região apresentou pior evolução?',
-    'Onde existe maior pressão entre demanda e oferta?',
-    'Quais unidades estão próximas de municípios críticos?',
-    'Como a situação mudou nos últimos meses?',
+    'Quantos casos ultrapassaram o prazo de 60 dias?',
+    'Quais os 5 municípios com mais casos acima de 60 dias?',
+    'Qual DRS tem a maior média de dias de espera?',
+    'Quantos casos acima de 60 dias houve por ano de diagnóstico?',
+    'Qual tipo de tratamento tem a maior média de dias de espera?',
+    'Quais as 5 unidades de saúde com mais casos acima de 60 dias?',
   ];
   const APIS = [
     ['API de dados', '/api/painel', 'Indicadores agregados com filtros e supressão de grupos pequenos', 'real', 'Ativa'],

@@ -197,6 +197,16 @@ def test_powerbi_link_do_navegador_vira_embed():
         normalizar_powerbi("https://site-malicioso.example/reportEmbed?reportId=x")
 
 
+def test_extracao_sql_do_select_ai():
+    from server.select_ai import _extrair_consulta
+
+    assert _extrair_consulta("SELECT 1 FROM dual") == "SELECT 1 FROM dual"
+    assert _extrair_consulta("```sql\nSELECT 1 FROM dual;\n```") == "SELECT 1 FROM dual"
+    assert _extrair_consulta("Aqui esta a consulta:\nWITH a AS (SELECT 1 x FROM dual) SELECT x FROM a").startswith("WITH")
+    assert _extrair_consulta("Sorry, unfortunately a valid SELECT statement could not be generated") is None
+    assert _extrair_consulta("SELECT 1 FROM dual; DELETE FROM TB_DRS") is None
+
+
 def test_ia_nao_inventa_resposta(logado):
     r = logado.post("/api/ia/perguntar", json={"pergunta": "Qual regiao tem maior risco?"}, headers=H)
     assert r.status_code == 503

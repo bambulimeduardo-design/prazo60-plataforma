@@ -18,8 +18,11 @@ from __future__ import annotations
 
 import datetime
 import decimal
+import logging
 import re
 import time
+
+log = logging.getLogger("prazo60")
 
 # Erros passageiros do provedor do modelo: 503 (sobrecarga) e 429 (limite por minuto do plano gratuito).
 ERROS_TRANSITORIOS = ("ORA-20503", "ORA-20429")
@@ -74,11 +77,20 @@ def _gerar_sql(cursor, pergunta: str, perfil: str) -> str:
     raise ProvedorIndisponivel("Modelo de linguagem indisponivel.")
 
 
-def _validar_leitura(sql: str) -> str:
-    consulta = sql.strip().rstrip(";").strip()
-    if not re.match(r"(?is)^(select|with)\b", consulta) or ";" in consulta:
-        raise ConsultaRecusada("A IA não conseguiu transformar essa pergunta em uma consulta aos dados do Prazo60. Tente reformular com mais detalhes.")
-    return consulta
+def _extrair_consulta(texto: str) -> str | None:
+    """
+    Aceita o SQL puro ou dentro de bloco ```sql```, com texto antes. Devolve None quando nao ha
+    uma unica consulta de leitura (SELECT/WITH no inicio de uma linha, sem comandos encadeados).
+    """
+    conteudo = (texto or "").strip()
+    bloco = re.search(r"```(?:sql)?\s*(.*?)```", conteudo, re.S | re.I)
+    if bloco:
+        conteudo = bloco.group(1).strip()
+    inicio = re.search(r"(?im)^\s*(with|select)\b", conteudo)
+    if not inicio:
+        return None
+    consulta = conteudo[inicio.start():].strip().rstrip(";").strip()
+    return None if ";" in consulta else consulta
 
 
 def perguntar(pergunta: str, perfil: str) -> dict:
@@ -90,8 +102,16 @@ def perguntar(pergunta: str, perfil: str) -> dict:
     with get_connection() as conn:
         conn.call_timeout = TEMPO_MAXIMO_MS
         cursor = conn.cursor()
-        sql_gerado = _gerar_sql(cursor, pergunta, perfil)
-        consulta = _validar_leitura(sql_gerado)
+        # O modelo nem sempre responde igual: se nao vier SQL, pede de novo uma vez.
+        consulta = None
+        for tentativa in range(2):
+            sql_gerado = _gerar_sql(cursor, pergunta, perfil)
+            consulta = _extrair_consulta(sql_gerado)
+            if consulta:
+                break
+            log.info("Select AI sem SQL valido (tentativa %s): %.160s", tentativa + 1, sql_gerado.replace("\n", " "))
+        if not consulta:
+            raise ConsultaRecusada("A IA não conseguiu transformar essa pergunta em uma consulta aos dados do Prazo60. Tente reformular com mais detalhes.")
         try:
             cursor.execute(consulta)
             colunas = [c[0] for c in cursor.description]
