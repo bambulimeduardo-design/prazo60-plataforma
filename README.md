@@ -2,7 +2,7 @@
 
 Plataforma digital que monitora o cumprimento da Lei 12.732/2012 (prazo legal de 60 dias entre diagnóstico e início de tratamento oncológico no SUS), com foco em câncer de mama no estado de São Paulo.
 
-Projeto desenvolvido para o Enterprise Challenge FIAP + Oracle (012026), turma 1TSCPV.
+Projeto desenvolvido para o Enterprise Challenge FIAP + Oracle, turma 1TSCPV.
 
 ## O problema
 
@@ -45,16 +45,16 @@ Vídeo pitch (YouTube): _[completar]_
 ## Estrutura do repositório
 
 ```
-sprint1_ideacao/        → Documento de ideação (Sprint 1)
-sprint2_arquitetura/    → Diagramas de arquitetura e protótipos (Sprint 2)
-sprint3_construcao/     → Entregas por disciplina (Sprint 3)
+sprint_01_ideacao/        → Documento de ideação (Sprint 1)
+sprint_022_arquitetura/    → Diagramas de arquitetura e protótipos (Sprint 2)
+sprint_03_construcao/     → Entregas por disciplina (Sprint 3)
   ├── data_ethics_governance/
   ├── smart_sql/
   ├── data_driven_apps/
   ├── data_architecture_nosql/
   ├── modern_data_architecture/
   └── statistical_methods/
-sprint4_solucao_final/  → Apresentação final, vídeo pitch, evidências
+sprint_04_solucao_final/  → Apresentação final, vídeo pitch, evidências
 dados/exemplos/         → Bases tratadas usadas no projeto
 ```
 
