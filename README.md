@@ -42,21 +42,6 @@ Link do dashboard (Power BI): _[completar]_
 
 Vídeo pitch (YouTube): _[completar]_
 
-## Estrutura do repositório
-
-```
-sprint_01_ideacao/        → Documento de ideação (Sprint 1)
-sprint_022_arquitetura/    → Diagramas de arquitetura e protótipos (Sprint 2)
-sprint_03_construcao/     → Entregas por disciplina (Sprint 3)
-  ├── data_ethics_governance/
-  ├── smart_sql/
-  ├── data_driven_apps/
-  ├── data_architecture_nosql/
-  ├── modern_data_architecture/
-  └── statistical_methods/
-sprint_04_solucao_final/  → Apresentação final, vídeo pitch, evidências
-dados/exemplos/         → Bases tratadas usadas no projeto
-```
 
 ## Time Dataholics
 
