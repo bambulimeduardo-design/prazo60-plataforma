@@ -1,0 +1,82 @@
+:root {
+  --paper: #FFFFFF;
+  --paper-2: #FBF6F8;
+  --ink: #2A2629;
+  --ink-soft: #6E6269;
+  --hairline: #EFDDE4;
+  --primary: #C2185B;
+  --primary-dark: #8E1446;
+  --primary-soft: #FCE8EF;
+  --alert: #B3261E;
+  --font-display: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body { font-family: var(--font-body); color: var(--ink); background: var(--paper); font-size: 15px; line-height: 1.5; }
+[hidden] { display: none !important; }
+
+.login { display: grid; grid-template-columns: 1.05fr 1fr; min-height: 100vh; }
+
+.login-marca {
+  background: linear-gradient(160deg, #8E1446 0%, #C2185B 100%);
+  color: #fff;
+  display: flex; align-items: flex-end;
+  padding: 56px;
+  position: relative; overflow: hidden;
+}
+.login-marca::after {
+  content: ''; position: absolute; right: -120px; top: -120px; width: 420px; height: 420px;
+  border: 1px solid rgba(255,255,255,0.18); border-radius: 50%;
+}
+.login-marca-conteudo { max-width: 520px; position: relative; z-index: 1; }
+.login-eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.8; margin: 0 0 16px; }
+.login-marca h2 { font-family: var(--font-display); font-weight: 600; font-size: 38px; line-height: 1.15; margin: 0 0 20px; letter-spacing: -0.01em; }
+.login-lei { font-size: 15px; opacity: 0.88; margin: 0 0 36px; max-width: 440px; }
+.login-cadeia { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0; }
+.login-cadeia li { font-family: var(--font-mono); font-size: 11.5px; padding: 6px 10px; border: 1px solid rgba(255,255,255,0.35); border-radius: 999px; }
+
+.login-painel { display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 40px 24px 24px; background: var(--paper); }
+.login-caixa { width: 100%; max-width: 380px; }
+.login-logo { display: block; width: 112px; height: auto; margin: 0 0 20px; }
+.login-caixa h1 { font-family: var(--font-display); font-size: 26px; font-weight: 600; margin: 0 0 4px; }
+.login-sub { color: var(--ink-soft); margin: 0 0 28px; }
+
+form label { display: block; font-size: 13px; font-weight: 600; margin: 0 0 6px; }
+form input {
+  width: 100%; font: inherit; font-size: 15px; padding: 11px 12px; margin: 0 0 18px;
+  border: 1px solid #DCC9D1; border-radius: 8px; background: #fff; color: var(--ink);
+}
+form input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-soft); }
+.campo-senha { position: relative; }
+.campo-senha input { padding-right: 84px; }
+.alternar-senha {
+  position: absolute; right: 6px; top: 6px; height: 32px; padding: 0 10px; font: inherit; font-size: 12.5px; font-weight: 600;
+  color: var(--primary); background: none; border: none; border-radius: 6px; cursor: pointer;
+}
+.alternar-senha:hover { background: var(--primary-soft); }
+.aviso-caps { font-size: 12.5px; color: #8A5A00; margin: -10px 0 14px; }
+.login-erro { background: #FDECEA; color: var(--alert); border-radius: 8px; padding: 10px 12px; font-size: 13.5px; margin: 0 0 16px; }
+
+.botao-entrar {
+  width: 100%; font: inherit; font-weight: 600; font-size: 15px; padding: 12px; border: none; border-radius: 8px;
+  background: var(--primary); color: #fff; cursor: pointer; transition: background 0.15s;
+}
+.botao-entrar:hover { background: var(--primary-dark); }
+.botao-entrar:disabled { opacity: 0.7; cursor: progress; }
+.botao-entrar:focus-visible, .alternar-senha:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+.login-garantias { list-style: none; padding: 0; margin: 28px 0 0; font-size: 12.5px; color: var(--ink-soft); }
+.login-garantias li { padding-left: 18px; position: relative; margin-bottom: 6px; }
+.login-garantias li::before { content: ''; position: absolute; left: 0; top: 7px; width: 7px; height: 7px; border-radius: 50%; background: var(--primary); }
+.login-rodape { font-family: var(--font-mono); font-size: 11px; color: var(--ink-soft); margin-top: 40px; text-align: center; }
+
+@media (max-width: 860px) {
+  .login { grid-template-columns: 1fr; }
+  .login-marca { padding: 32px 24px; min-height: auto; }
+  .login-marca h2 { font-size: 26px; }
+  .login-lei { margin-bottom: 20px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }

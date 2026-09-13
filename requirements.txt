@@ -1,0 +1,6 @@
+fastapi==0.115.0
+uvicorn[standard]==0.32.0
+itsdangerous==2.2.0
+python-dotenv==1.0.1
+# Necessario apenas quando o Oracle / Select AI estiver configurado (importado sob demanda)
+oracledb==2.5.0

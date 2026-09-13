@@ -1,0 +1,52 @@
+# Blueprint do Render: https://render.com/docs/blueprint-spec
+# No painel do Render: New > Blueprint > selecione este repositorio.
+services:
+  - type: web
+    name: prazo60
+    runtime: python
+    plan: free
+    region: virginia
+    branch: main
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn server.main:app --host 0.0.0.0 --port $PORT --proxy-headers --forwarded-allow-ips "*"
+    healthCheckPath: /api/saude
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.5
+      - key: PRAZO60_AMBIENTE
+        value: producao
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: APP_USER
+        value: DATAHOLICS
+      # APP_PASSWORD_HASH: opcional. Sem ela vale o hash padrao da senha definida pelo grupo.
+      # Para trocar a senha: python scripts/gerar_hash_senha.py e cole o resultado no painel.
+      - key: SESSION_MAX_HOURS
+        value: "8"
+      # Power BI: aceita o link do relatorio, o de "Site ou portal" ou o de "Publicar na Web".
+      # O servidor converte o link do relatorio para o formato de incorporacao.
+      - key: POWERBI_EMBED_URL
+        value: https://app.powerbi.com/groups/me/reports/0a799b85-3b20-4162-81b6-d3a61ba73ff7/d1bb6caba29ffc924e85?experience=power-bi
+      - key: POWERBI_TITULO
+        value: Relatorio Prazo60
+      # Oracle Select AI: ligado. So responde depois de ORACLE_PASSWORD, ORACLE_WALLET_PASSWORD
+      # e dos Secret Files tnsnames.ora e ewallet.pem estarem configurados.
+      - key: SELECT_AI_HABILITADO
+        value: "true"
+      # Perfil com provedor Google Gemini (a conta OCI ficou sem cota de Generative AI em 13/09/2026)
+      - key: SELECT_AI_PERFIL
+        value: PRAZO60_AI_GOOGLE
+      - key: SELECT_AI_PROVEDOR
+        value: Google Gemini (gemini-flash-lite-latest)
+      # Conexao Oracle (preencher no painel; wallet em Secret Files: tnsnames.ora e ewallet.pem)
+      - key: ORACLE_USER
+        value: PRAZO60_APP
+      - key: ORACLE_DSN
+        value: prazo60db_low
+      - key: ORACLE_WALLET_DIR
+        value: /etc/secrets
+      - key: ORACLE_PASSWORD
+        sync: false
+      - key: ORACLE_WALLET_PASSWORD
+        sync: false

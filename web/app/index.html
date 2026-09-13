@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Prazo60 · Centro de Inteligência</title>
+<link rel="icon" type="image/png" href="/public/assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="css/global.css">
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+<header class="topo">
+  <button class="botao-menu" id="botao-menu" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <a class="topo-marca" href="#/inicio">
+    <img src="assets/logo-prazo60-96.png" alt="" width="36" height="37">
+    <span><strong>Prazo60</strong><small>Centro de Inteligência</small></span>
+  </a>
+  <nav class="migalhas" id="migalhas" aria-label="Você está em"></nav>
+  <div class="topo-acoes">
+    <span class="topo-fonte" id="topo-fonte" title="Base carregada no servidor"></span>
+    <button class="botao botao-secundario" id="botao-apresentacao" type="button">Modo Apresentação</button>
+    <span class="topo-usuario" id="topo-usuario"></span>
+    <button class="botao botao-fantasma" id="botao-sair" type="button">Sair</button>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="menu" id="menu">
+    <nav aria-label="Navegação principal">
+      <p class="menu-grupo">Entender</p>
+      <a href="#/inicio" data-rota="inicio"><i class="ic ic-casa"></i>Início</a>
+      <a href="#/executiva" data-rota="executiva"><i class="ic ic-painel"></i>Visão Executiva</a>
+      <a href="#/panorama" data-rota="panorama"><i class="ic ic-relogio"></i>Panorama dos 60 Dias</a>
+      <p class="menu-grupo">Localizar</p>
+      <a href="#/demanda-oferta" data-rota="demanda-oferta"><i class="ic ic-balanca"></i>Demanda &amp; Oferta</a>
+      <a href="#/mapa" data-rota="mapa"><i class="ic ic-mapa"></i>Mapa de Atendimento</a>
+      <a href="#/gargalos" data-rota="gargalos"><i class="ic ic-alerta"></i>Onde estão os gargalos?</a>
+      <p class="menu-grupo">Agir</p>
+      <a href="#/encaminhar" data-rota="encaminhar"><i class="ic ic-rota"></i>Para onde encaminhar?</a>
+      <a href="#/simulacao" data-rota="simulacao"><i class="ic ic-simulacao"></i>Simulação</a>
+      <p class="menu-grupo">Aprofundar</p>
+      <a href="#/powerbi" data-rota="powerbi"><i class="ic ic-bi"></i>Power BI</a>
+      <a href="#/ia" data-rota="ia"><i class="ic ic-ia"></i>Inteligência Artificial</a>
+      <a href="#/dados" data-rota="dados"><i class="ic ic-dados"></i>Dados &amp; Metodologia</a>
+      <a href="#/sobre" data-rota="sobre"><i class="ic ic-info"></i>Sobre o Prazo60</a>
+    </nav>
+  </aside>
+
+  <main class="conteudo" id="conteudo" tabindex="-1">
+
+    <!-- ===== Filtros globais (visiveis nas paginas analiticas) ===== -->
+    <section class="barra-filtros" id="barra-filtros" aria-label="Filtros globais" hidden>
+      <div class="filtros-linha">
+        <label class="filtro"><span>Ano</span><select id="f-ano"><option value="">Todo o período</option></select></label>
+        <label class="filtro"><span>Mês</span><select id="f-mes"><option value="">Todos</option></select></label>
+        <label class="filtro"><span>Região (DRS)</span><select id="f-drs"><option value="">Todas as regiões</option></select></label>
+        <label class="filtro filtro-largo"><span>Município</span><input id="f-municipio" list="lista-municipios" placeholder="Digite o nome" autocomplete="off"></label>
+        <label class="filtro filtro-largo"><span>Estabelecimento</span><select id="f-cnes"><option value="">Todos</option></select></label>
+        <label class="filtro"><span>Tratamento</span><select id="f-tipo"><option value="">Todos</option></select></label>
+        <label class="filtro"><span>Situação do prazo</span><select id="f-situacao">
+          <option value="">Todas</option><option value="dentro">Dentro (até 45 dias)</option><option value="limite">Próximo do limite (46–60)</option><option value="acima">Acima de 60 dias</option>
+        </select></label>
+        <div class="filtro"><span>Localização por</span>
+          <div class="alternador" id="f-dimensao" role="group" aria-label="Dimensão geográfica">
+            <button type="button" data-valor="residencia" class="ativo">Residência</button>
+            <button type="button" data-valor="tratamento">Tratamento</button>
+          </div>
+        </div>
+      </div>
+      <div class="filtros-ativos">
+        <span class="filtros-rotulo">CID-10 C50 · Feminino · São Paulo</span>
+        <div class="chips" id="chips-filtros"></div>
+        <button type="button" class="botao-link" id="limpar-filtros" hidden>Limpar filtros</button>
+      </div>
+      <datalist id="lista-municipios"></datalist>
+    </section>
+
+    <!-- ===== 1. Inicio ===== -->
+    <section class="pagina" data-pagina="inicio" hidden>
+      <div class="hero">
+        <div class="hero-texto">
+          <p class="eyebrow">Plataforma de inteligência em saúde pública · Dataholics</p>
+          <h1 class="hero-titulo">Prazo60</h1>
+          <p class="hero-slogan">Diagnóstico não pode esperar. Tratamento também não.</p>
+          <p class="hero-lead">O Prazo60 utiliza dados públicos para transformar informações sobre o atendimento oncológico no SUS em inteligência para acompanhamento do prazo legal de tratamento, identificação de gargalos e apoio à tomada de decisão.</p>
+          <div class="hero-cta">
+            <a class="botao botao-primario botao-grande" href="#/executiva">Explorar os dados</a>
+            <a class="botao botao-secundario botao-grande" href="#/sobre">Conhecer o projeto</a>
+          </div>
+        </div>
+        <div class="hero-evidencia cartao" id="inicio-evidencia">
+          <p class="cartao-pergunta">As pacientes estão iniciando o tratamento dentro de 60 dias? <span class="selo selo-real">Dado real</span></p>
+          <div class="estado estado-carregando">Carregando indicadores…</div>
+        </div>
+      </div>
+
+      <div class="secao">
+        <p class="eyebrow">Como a plataforma conta a história</p>
+        <h2 class="secao-titulo">Do dado à decisão</h2>
+        <ol class="jornada">
+          <li><a href="#/executiva"><b>01</b><strong>Existe um problema</strong><span>Visão executiva do cumprimento da Lei 12.732/2012.</span></a></li>
+          <li><a href="#/panorama"><b>02</b><strong>Conseguimos medi-lo</strong><span>Distribuição dos dias entre diagnóstico e tratamento.</span></a></li>
+          <li><a href="#/mapa"><b>03</b><strong>Conseguimos localizar</strong><span>Regiões e municípios no mapa de São Paulo.</span></a></li>
+          <li><a href="#/gargalos"><b>04</b><strong>Identificamos gargalos</strong><span>Alertas por regras explícitas e fatores relacionados.</span></a></li>
+          <li><a href="#/encaminhar"><b>05</b><strong>Encontramos alternativas</strong><span>Unidades oncológicas próximas nos dados oficiais.</span></a></li>
+          <li><a href="#/simulacao"><b>06</b><strong>Simulamos cenários</strong><span>Impacto estimado de redistribuir o fluxo.</span></a></li>
+          <li><a href="#/gargalos"><b>07</b><strong>Apoiamos a decisão</strong><span>Recomendações com fundamento e limitações.</span></a></li>
+        </ol>
+      </div>
+
+      <div class="secao grade g3">
+        <div class="cartao cartao-pergunta-grande"><span class="numero-grande">1</span><h3>O que está acontecendo?</h3><p>Diagnóstico: quantas pacientes iniciam o tratamento acima do prazo legal e como isso evolui.</p><a href="#/executiva" class="botao-link">Ver diagnóstico →</a></div>
+        <div class="cartao cartao-pergunta-grande"><span class="numero-grande">2</span><h3>Onde está acontecendo?</h3><p>Localização: DRS e municípios com maior percentual acima de 60 dias e maior pressão assistencial.</p><a href="#/mapa" class="botao-link">Ver mapa →</a></div>
+        <div class="cartao cartao-pergunta-grande"><span class="numero-grande">3</span><h3>O que podemos fazer?</h3><p>Apoio à decisão: alternativas de encaminhamento e simulação do impacto, sempre identificadas como tal.</p><a href="#/simulacao" class="botao-link">Simular →</a></div>
+      </div>
+
+      <div class="secao">
+        <p class="eyebrow">Caso de uso completo</p>
+        <h2 class="secao-titulo">Um gestor, um município crítico, uma decisão apoiada por dados</h2>
+        <ol class="fluxo-caso">
+          <li><strong>Situação</strong><span>Município com alto percentual acima de 60 dias.</span><a href="#/gargalos">Gargalos</a></li>
+          <li><strong>Diagnóstico</strong><span>Quantidade, percentual, evolução e comparação regional.</span><a href="#/executiva">Visão Executiva</a></li>
+          <li><strong>Investigação</strong><span>Pressão entre demanda e oferta habilitada.</span><a href="#/demanda-oferta">Demanda &amp; Oferta</a></li>
+          <li><strong>Localização</strong><span>Unidades oncológicas próximas.</span><a href="#/encaminhar">Para onde encaminhar?</a></li>
+          <li><strong>Simulação</strong><span>Teste de redistribuição com premissas explícitas.</span><a href="#/simulacao">Simulador</a></li>
+          <li><strong>BI</strong><span>Análise aprofundada no relatório Power BI.</span><a href="#/powerbi">Power BI</a></li>
+          <li><strong>IA</strong><span>Perguntas em linguagem natural ao Oracle Select AI (roadmap).</span><a href="#/ia">Prazo60 AI</a></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== 2. Visao Executiva ===== -->
+    <section class="pagina" data-pagina="executiva" hidden>
+      <header class="pagina-cabecalho">
+        <p class="eyebrow">O que os dados mostram?</p>
+        <h1>Visão Executiva <span class="selo selo-real">Dado real</span></h1>
+        <p class="lead">A situação em poucos segundos: cumprimento do prazo legal, tendência e onde agir primeiro.</p>
+      </header>
+      <div class="grade g4 kpis" id="exec-kpis"></div>
+      <div class="grade g-2-1">
+        <div class="cartao">
+          <p class="cartao-pergunta">Como o indicador evoluiu mês a mês?</p>
+          <div class="grafico grafico-medio"><canvas id="graf-exec-mensal" aria-label="Evolução mensal do percentual acima de 60 dias"></canvas></div>
+          <p class="nota" id="exec-nota-serie"></p>
+        </div>
+        <div class="cartao">
+          <p class="cartao-pergunta">Qual a distância até a meta? <button class="botao-info" data-indicador="meta_60">Como calculamos?</button></p>
+          <div class="gauge" id="exec-gauge"></div>
+        </div>
+      </div>
+      <div class="grade g-1-2">
+        <div class="cartao" id="exec-comparacao"></div>
+        <div class="cartao">
+          <p class="cartao-pergunta">Como cada ano se compara?</p>
+          <div class="grafico grafico-medio"><canvas id="graf-exec-anual" aria-label="Comparação anual"></canvas></div>
+        </div>
+      </div>
+      <div class="secao">
+        <p class="eyebrow">Quem precisa de atenção?</p>
+        <h2 class="secao-titulo">Recomendações de apoio à decisão</h2>
+        <p class="nota">Geradas por regras explícitas sobre os dados. Não são ordem médica, decisão clínica nem substituem a regulação oficial.</p>
+        <div class="grade g4" id="exec-recomendacoes"></div>
+      </div>
+    </section>
+
+    <!-- ===== 3. Panorama dos 60 dias ===== -->
+    <section class="pagina" data-pagina="panorama" hidden>
+      <header class="pagina-cabecalho">
+        <p class="eyebrow">O que acontece entre o diagnóstico e o tratamento?</p>
+        <h1>Panorama dos 60 Dias <span class="selo selo-real">Dado real</span></h1>
+        <p class="lead">Cada caso classificado pelo tempo até o primeiro tratamento, a partir do diagnóstico confirmado.</p>
+      </header>
+      <div class="cartao">
+        <div class="regua" id="pan-regua">
+          <div class="regua-trilho"><span class="seg seg-dentro"></span><span class="seg seg-limite"></span><span class="seg seg-acima"></span></div>
+          <div class="regua-marcos">
+            <span style="left:0%">Diagnóstico<br><b>Dia 0</b></span>
+            <span style="left:25%"><b>Dia 30</b></span>
+            <span style="left:37.5%"><b>Dia 45</b></span>
+            <span style="left:50%" class="marco-legal"><b>Dia 60</b><br>limite legal</span>
+            <span style="left:100%"><b>Acima de 60</b></span>
+          </div>
+        </div>
+        <div class="grade g3 situacoes" id="pan-situacao"></div>
+      </div>
+      <div class="grade g2">
+        <div class="cartao">
+          <p class="cartao-pergunta">Como os casos se distribuem por faixa de dias?</p>
+          <div class="grafico grafico-medio"><canvas id="graf-pan-faixas"></canvas></div>
+        </div>
+        <div class="cartao">
+          <p class="cartao-pergunta">A distribuição mudou ao longo dos anos?</p>
+          <div class="grafico grafico-medio"><canvas id="graf-pan-anos"></canvas></div>
+          <p class="nota" id="pan-nota-anos"></p>
+        </div>
+      </div>
+      <div class="cartao">
+        <p class="cartao-pergunta">O tempo varia com o tipo do primeiro tratamento?</p>
+        <div class="tabela-rolagem"><table class="tabela" id="pan-tipos"></table></div>
+      </div>
+    </section>
+
+    <!-- ===== 4. Demanda & Oferta ===== -->
+    <section class="pagina" data-pagina="demanda-oferta" hidden>
+      <header class="pagina-cabecalho">
+        <p class="eyebrow">Por que isso pode estar acontecendo?</p>
+        <h1>Demanda &amp; Oferta <span class="selo selo-real">Dado real</span></h1>
+        <p class="lead">Casos de câncer de mama comparados com a oferta habilitada em oncologia (CACON/UNACON) em cada região.</p>
+      </header>
+      <div class="aviso aviso-limite"><strong>Demanda/oferta não equivale à existência de vaga.</strong> A pressão assistencial indica onde há mais casos por estabelecimento habilitado; não mede ocupação, agenda ou capacidade real de atendimento.</div>
+      <div class="grade g3 kpis" id="do-kpis"></div>
+      <div class="grade g2">
+        <div class="cartao">
+          <p class="cartao-pergunta">Existe relação entre pressão assistencial e tempo até o tratamento? <button class="botao-info" data-indicador="pressao">Como calculamos?</button></p>
+          <div class="grafico grafico-alto"><canvas id="graf-do-dispersao"></canvas></div>
+          <p class="nota">Cada ponto é uma DRS. Correlação observada não implica causalidade.</p>
+        </div>
+        <div class="cartao">
+          <p class="cartao-pergunta">Quais regiões concentram maior volume?</p>
+          <div class="grafico grafico-alto"><canvas id="graf-do-barras"></canvas></div>
+        </div>
+      </div>
+      <div class="cartao">
+        <div class="cartao-cabecalho">
+          <p class="cartao-pergunta">Quem está pior em cada critério?</p>
+          <div class="abas" id="do-abas" role="tablist">
+            <button role="tab" data-ranking="demanda" class="ativo">Maior demanda</button>
+            <button role="tab" data-ranking="oferta">Menor oferta relativa</button>
+            <button role="tab" data-ranking="pressao">Maior pressão (DRS)</button>
+            <button role="tab" data-ranking="prazo">Maior % acima de 60 dias</button>
+          </div>
+        </div>
+        <div class="tabela-rolagem"><table class="tabela" id="do-ranking"></table></div>
+        <p class="nota" id="do-ranking-nota"></p>
+      </div>
+      <div class="cartao">
+        <p class="cartao-pergunta">Para onde as pacientes se deslocam para tratar?</p>
+        <p class="nota" id="do-sankey-legenda"></p>
+        <div class="sankey"><svg id="do-sankey" viewBox="0 0 960 560" role="img" aria-label="Fluxos entre região de residência e região de tratamento"></svg></div>
+      </div>
+    </section>
+
+    <!-- ===== 5. Mapa ===== -->
+    <section class="pagina" data-pagina="mapa" hidden>
+      <header class="pagina-cabecalho">
+        <p class="eyebrow">Onde estão os problemas?</p>
+        <h1>Mapa de Atendimento <span class="selo selo-real">Dado real</span></h1>
+        <p class="lead">17 Departamentos Regionais de Saúde, municípios e unidades que trataram casos C50. Clique em uma região para ver o detalhe e filtrar a plataforma.</p>
+      </header>
+      <div class="mapa-layout">
+        <div class="cartao mapa-cartao">
+          <div class="mapa-controles">
+            <label class="filtro"><span>Colorir regiões por</span>
+              <select id="mapa-metrica">
+                <option value="pct_fora_60">% acima de 60 dias</option>
+                <option value="mediana_dias">Mediana de dias</option>
+                <option value="n">Demanda (casos)</option>
+                <option value="pressao_casos_por_estabelecimento">Pressão (casos por estabelecimento)</option>
+              </select>
+            </label>
+            <label class="checagem"><input type="checkbox" id="mapa-camada-municipios" checked> Municípios (demanda)</label>
+            <label class="checagem"><input type="checkbox" id="mapa-camada-unidades" checked> Unidades tratantes</label>
+          </div>
+          <div class="mapa-area">
+            <svg id="mapa-svg" viewBox="0 0 800 540" role="img" aria-label="Mapa do Estado de São Paulo por DRS"></svg>
+            <div class="mapa-dica" id="mapa-dica" hidden></div>
+          </div>
+          <div class="mapa-legenda" id="mapa-legenda"></div>
+          <p class="nota" id="mapa-nota"></p>
+        </div>
+        <aside class="cartao mapa-detalhe" id="mapa-detalhe">
+          <div class="estado estado-vazio">Passe o mouse ou clique em uma região do mapa.</div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ===== 6. Gargalos ===== -->
+    <section class="pagina" data-pagina="gargalos" hidden>
+      <header class="pagina-cabecalho">
+        <p class="eyebrow">Onde está o problema? Quem precisa de atenção?</p>
+        <h1>Onde estão os gargalos? <span class="selo selo-real">Dado real</span></h1>
+        <p class="lead" id="garg-lead">Classificação automática das regiões comparando os dois últimos anos fechados.</p>
+      </header>
+      <div class="grade g4" id="garg-contadores"></div>
+      <div class="linha-acoes">
+        <button class="botao-info" data-indicador="regras_alerta">Como calculamos essa classificação?</button>
+      </div>
+      <div class="grade g-2-1">
+        <div class="cartao">
+          <p class="cartao-pergunta">Regiões por classificação</p>
+          <div id="garg-lista"></div>
+        </div>
+        <div class="cartao">
+          <p class="cartao-pergunta">Municípios críticos <span class="nota-inline">(≥ 30 casos no ano)</span></p>
+          <div id="garg-municipios"></div>
+        </div>
+      </div>
+      <div class="cartao">
+        <p class="cartao-pergunta">Por que isso pode estar acontecendo? Fatores relacionados por região</p>
+        <div class="tabela-rolagem"><table class="tabela" id="garg-fatores"></table></div>
+        <p class="nota">Fatores observados, não causas comprovadas. Destaques indicam valores piores que a mediana estadual.</p>
+      </div>
+      <div class="secao">
+        <p class="eyebrow">O que podemos fazer?</p>
+        <h2 class="secao-titulo">Motor de apoio à decisão</h2>
+        <div class="grade g2" id="garg-recomendacoes"></div>
+      </div>
+    </section>
+
+    <!-- ===== 7. Para onde encaminhar ===== -->
+    <section class="pagina" data-pagina="encaminhar" hidden>
+      <header class="pagina-cabecalho">
+        <p class="eyebrow">Quais alternativas existem?</p>
+        <h1>Para onde encaminhar? <span class="selo selo-real">Dado real</span> <span class="selo selo-estimativa">Distância estimada</span></h1>
+        <p class="lead">Unidades oncológicas próximas encontradas nos dados oficiais disponíveis, a partir do município de origem da paciente.</p>
+      </header>
+      <div class="aviso aviso-limite"><strong>Localização de serviço não é disponibilidade de serviço.</strong> A plataforma não possui acesso à ocupação hospitalar em tempo real. A disponibilidade exibida não deve ser interpretada como confirmação de vaga.</div>
+      <div class="cartao controles-linha">
+        <label class="filtro"><span>Região (DRS)</span><select id="enc-drs"><option value="">Todas</option></select></label>
+        <label class="filtro filtro-largo"><span>Município de origem</span><select id="enc-municipio"></select></label>
+        <button class="botao botao-secundario" id="enc-exemplo" type="button">Exemplo: São Bernardo do Campo</button>
+      </div>
+      <div id="enc-resultado"><div class="estado estado-vazio">Selecione um município de origem.</div></div>
+      <div class="cartao caso-estudo">
+        <p class="eyebrow">Lógica de decisão · exemplo demonstrativo</p>
+        <h3>Paciente residente em São Bernardo do Campo</h3>
+        <ol class="passos-verticais">
+          <li><strong>Identificar unidades próximas</strong>Unidades com habilitação confirmada (CIB-SP) ou que trataram ao menos 30 casos C50 na base, ordenadas por faixa de distância.</li>
+          <li><strong>Avaliar distância</strong>Linha reta entre sedes municipais (estimativa, não é rota).</li>
+          <li><strong>Avaliar informações assistenciais</strong>Habilitação, volume de casos, percentual acima de 60 dias e mediana observados na unidade.</li>
+          <li><strong>Apresentar alternativas</strong>Lista ordenada, incluindo onde as residentes já tratam hoje.</li>
+          <li><strong>Disponibilidade</strong>Sem dado real de ocupação: a decisão final depende da regulação (ex.: CROSS-SP).</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== 8. Simulacao ===== -->
+    <section class="pagina pagina-simulacao" data-pagina="simulacao" hidden>
+      <div class="faixa-simulacao">AMBIENTE DE SIMULAÇÃO · cenários hipotéticos · não representa a realidade operacional</div>
+      <header class="pagina-cabecalho">
+        <p class="eyebrow">O que acontece se redistribuirmos?</p>
+        <h1>Simulador de Encaminhamento <span class="selo selo-simulacao">Simulação</span></h1>
+        <p class="lead">Parte de dados reais de fluxo e espera, aplica um cenário e estima o impacto com premissas explícitas e ajustáveis.</p>
+      </header>
+      <ol class="stepper" id="sim-stepper">
+        <li data-etapa="1" class="ativo"><b>1</b>Município de origem</li>
+        <li data-etapa="2"><b>2</b>Cenário</li>
+        <li data-etapa="3"><b>3</b>Executar</li>
+        <li data-etapa="4"><b>4</b>Resultado</li>
+      </ol>
+      <div class="cartao sim-etapa" data-etapa="1">
+        <h3>Etapa 1 · Selecionar município de origem</h3>
+        <p class="nota" id="sim-nota-municipios"></p>
+        <div class="controles-linha">
+          <label class="filtro filtro-largo"><span>Município</span><select id="sim-municipio"></select></label>
+        </div>
+        <div id="sim-contexto"></div>
+        <div class="linha-acoes"><button class="botao botao-primario" id="sim-ir-2" type="button" disabled>Continuar</button></div>
+      </div>
+      <div class="cartao sim-etapa" data-etapa="2" hidden>
+        <h3>Etapa 2 · Selecionar cenário</h3>
+        <div class="grade g-auto cenarios" id="sim-cenarios"></div>
+        <div id="sim-parametros"></div>
+        <details class="premissas" open>
+          <summary>Premissas do modelo <span class="selo selo-premissa">Premissa</span></summary>
+          <div class="grade g2">
+            <label class="deslizante"><span>Utilização de base das unidades: <b id="sim-rho-valor"></b></span><input type="range" id="sim-rho" min="50" max="94" step="1"><small>Não existe na fonte pública. Quanto maior, mais sensível o sistema a qualquer aumento de carga.</small></label>
+            <label class="deslizante"><span>Parte da espera sensível à fila: <b id="sim-fila-valor"></b></span><input type="range" id="sim-fila" min="10" max="90" step="5"><small>O restante é percurso clínico (exames, estadiamento, consultas).</small></label>
+          </div>
+        </details>
+        <div class="linha-acoes"><button class="botao botao-fantasma" data-voltar="1" type="button">Voltar</button><button class="botao botao-primario" id="sim-ir-3" type="button">Continuar</button></div>
+      </div>
+      <div class="cartao sim-etapa" data-etapa="3" hidden>
+        <h3>Etapa 3 · Executar simulação</h3>
+        <div id="sim-revisao"></div>
+        <div class="linha-acoes"><button class="botao botao-fantasma" data-voltar="2" type="button">Voltar</button><button class="botao botao-primario" id="sim-executar" type="button">Executar simulação</button></div>
+      </div>
+      <div class="sim-etapa" data-etapa="4" hidden>
+        <div id="sim-resultado"></div>
+        <div class="linha-acoes"><button class="botao botao-fantasma" data-voltar="2" type="button">Ajustar cenário</button><button class="botao botao-secundario" data-voltar="1" type="button">Nova simulação</button></div>
+      </div>
+    </section>
+
+    <!-- ===== 9. Power BI ===== -->
+    <section class="pagina" data-pagina="powerbi" hidden>
+      <header class="pagina-cabecalho">
+        <p class="eyebrow">Análise aprofundada</p>
+        <h1>Business Intelligence</h1>
+        <p class="lead">Camada analítica integrada ao portal: o relatório Power BI do Prazo60 para exploração detalhada.</p>
+      </header>
+      <div class="grade g3 kpis" id="pbi-indicadores"></div>
+      <div class="cartao pbi-cartao">
+        <div class="cartao-cabecalho"><p class="cartao-pergunta" id="pbi-titulo">Relatório Power BI</p><a class="botao-link" id="pbi-abrir" href="#" target="_blank" rel="noopener noreferrer" hidden>Abrir em nova aba ↗</a></div>
+        <div class="pbi-area" id="pbi-area"><div class="estado estado-carregando">Verificando configuração do relatório…</div></div>
+      </div>
+      <details class="cartao documentacao">
+        <summary>Como incorporar e atualizar o relatório</summary>
+        <div class="grade g2">
+          <div><h4>Onde inserir o embed</h4><p>No painel do Render (Environment), defina <code>POWERBI_EMBED_URL</code> com o endereço de incorporação (<code>https://app.powerbi.com/...</code>) e, opcionalmente, <code>POWERBI_TITULO</code>. O servidor valida o domínio e a política de segurança já autoriza apenas <code>app.powerbi.com</code> e <code>app.fabric.microsoft.com</code> em iframes.</p></div>
+          <div><h4>Como atualizar</h4><p>Alterações no relatório publicadas no Power BI Service aparecem automaticamente. Trocar o relatório exige apenas mudar a variável e reiniciar o serviço; nenhum código é alterado.</p></div>
+          <div><h4>Permissões necessárias</h4><p>“Publicar na Web” exige permissão do administrador do tenant. “Inserir em site ou portal seguro” exige licença Pro/PPU para cada visualizador e login Microsoft. Embed com token (Power BI Embedded) exige capacidade dedicada e backend.</p></div>
+          <div><h4>Limitações e riscos</h4><p>“Publicar na Web” torna o relatório <strong>público para qualquer pessoa com o link</strong>, mesmo com o login desta plataforma, e não aceita segurança em nível de linha. Use apenas com dados agregados. Para ambientes privados, prefira “portal seguro” ou Power BI Embedded (token gerado no backend).</p></div>
+        </div>
+      </details>
+    </section>
+
+    <!-- ===== 10. IA ===== -->
+    <section class="pagina" data-pagina="ia" hidden>
+      <header class="pagina-cabecalho">
+        <p class="eyebrow">Pergunte aos dados</p>
+        <h1>Prazo60 AI <span class="selo selo-projecao" id="ia-selo-status">Roadmap técnico</span></h1>
+        <p class="lead">Perguntas em linguagem natural respondidas pelo Oracle Select AI sobre a base do Prazo60, sempre através do backend.</p>
+      </header>
+      <div class="aviso aviso-info" id="ia-status"></div>
+      <div class="grade g-2-1">
+        <div class="cartao chat">
+          <div class="chat-historico" id="ia-historico" aria-live="polite">
+            <div class="chat-msg chat-sistema">Faça uma pergunta sobre os dados do Prazo60. Enquanto a integração Oracle não estiver ativa, a plataforma informa isso claramente e não gera respostas.</div>
+          </div>
+          <div class="chat-sugestoes" id="ia-sugestoes"></div>
+          <form class="chat-form" id="ia-form">
+            <input id="ia-pergunta" maxlength="500" placeholder="Qual região apresenta maior risco de ultrapassar o prazo de 60 dias?" aria-label="Pergunta">
+            <button class="botao botao-primario" type="submit">Analisar</button>
+          </form>
+        </div>
+        <div class="cartao">
+          <p class="cartao-pergunta">Arquitetura da integração</p>
+          <ol class="arquitetura-vertical">
+            <li><strong>Frontend</strong><span>Esta tela. Sem credenciais.</span></li>
+            <li><strong>API Backend</strong><span>FastAPI · /api/ia/perguntar · sessão + limite de uso</span></li>
+            <li><strong>Camada de acesso</strong><span>python-oracledb (mTLS/wallet) ou ORDS</span></li>
+            <li><strong>Oracle Autonomous Database</strong><span>Prazo60DB · OCI São Paulo</span></li>
+            <li><strong>Select AI</strong><span>DBMS_CLOUD_AI · perfil PRAZO60_AI_GOOGLE · modelo Google Gemini</span></li>
+            <li><strong>Resposta</strong><span>Texto + SQL gerado, para auditoria</span></li>
+          </ol>
+          <p class="nota">Senhas, wallet e connection string ficam apenas em variáveis de ambiente do servidor. O navegador nunca acessa o banco.</p>
+        </div>
+      </div>
+      <div class="secao">
+        <p class="eyebrow">Evidência do protótipo</p>
+        <h2 class="secao-titulo">Consultas já validadas com Select AI <span class="selo selo-real">Dado real · escopo de 200 casos</span></h2>
+        <p class="nota" id="ia-evidencia-escopo"></p>
+        <div class="grade g2" id="ia-evidencias"></div>
+      </div>
+      <div class="secao">
+        <h2 class="secao-titulo">APIs previstas</h2>
+        <div class="tabela-rolagem"><table class="tabela" id="ia-apis"></table></div>
+      </div>
+    </section>
+
+    <!-- ===== 11. Dados & Metodologia ===== -->
+    <section class="pagina" data-pagina="dados" hidden>
+      <header class="pagina-cabecalho">
+        <p class="eyebrow">O que sustenta esse diagnóstico?</p>
+        <h1>Dados &amp; Metodologia</h1>
+        <p class="lead">Transparência técnica para que a plataforma seja defensável, não apenas visualmente bonita.</p>
+      </header>
+      <div class="abas abas-pagina" id="dados-abas" role="tablist">
+        <button role="tab" data-aba="fontes" class="ativo">Fontes</button>
+        <button role="tab" data-aba="pipeline">Pipeline &amp; Arquitetura</button>
+        <button role="tab" data-aba="qualidade">Qualidade dos Dados</button>
+        <button role="tab" data-aba="indicadores">Indicadores</button>
+        <button role="tab" data-aba="privacidade">Privacidade e Ética</button>
+        <button role="tab" data-aba="limitacoes">Limitações</button>
+      </div>
+
+      <div class="aba-painel" data-aba="fontes">
+        <div class="grade g2">
+          <div class="cartao fonte"><span class="selo selo-real">Em uso</span><h3>Painel-Oncologia (INCA/DATASUS)</h3><dl><dt>Origem</dt><dd>Extrato POBR, casos fechados de câncer de mama (CID-10 C50), sexo feminino, Estado de São Paulo.</dd><dt>Período</dt><dd>Diagnósticos de jan/2022 a abr/2026 (2026 parcial).</dd><dt>Tratamento</dt><dd>765 de 46.181 registros descartados por data de tratamento anterior ao diagnóstico; 45.416 válidos.</dd><dt>Transformação</dt><dd>Dias = início do tratamento − diagnóstico; município IBGE → DRS pela malha oficial (645 municípios).</dd></dl></div>
+          <div class="cartao fonte"><span class="selo selo-real">Em uso</span><h3>Indicadores territoriais de oferta</h3><dl><dt>Origem</dt><dd>Painel-Oncologia: mamografias de rastreio (50–69 anos) e estabelecimentos habilitados CACON/UNACON por DRS.</dd><dt>Período</dt><dd>2022 a 2026, fechamentos anuais (referência: 2025).</dd><dt>Limitação</dt><dd>Volumes absolutos, sem denominador populacional.</dd></dl></div>
+          <div class="cartao fonte"><span class="selo selo-real">Em uso</span><h3>CNES e deliberações CIB-SP</h3><dl><dt>Origem</dt><dd>CNES tratante de cada caso; nome e tipo de habilitação confirmados para 20 unidades em deliberações da CIB-SP.</dd><dt>Limitação</dt><dd>Demais unidades exibidas pelo código CNES, sem nome confirmado. Endereço não carregado.</dd></dl></div>
+          <div class="cartao fonte"><span class="selo selo-estimativa">Apoio</span><h3>Coordenadas municipais</h3><dl><dt>Origem</dt><dd>Sedes municipais derivadas do IBGE (conjunto aberto kelvins/municipios-brasileiros).</dd><dt>Uso</dt><dd>Distância em linha reta e posição dos municípios no mapa. Não representa rota nem tempo de viagem.</dd></dl></div>
+          <div class="cartao fonte"><span class="selo selo-demonstracao">Previsto</span><h3>SIH/SUS e RHC/INCA</h3><dl><dt>Uso futuro</dt><dd>Internações e registro hospitalar de câncer para complementar estadiamento, procedimentos e desfechos.</dd><dt>Status</dt><dd>Não carregados nesta versão; nenhum indicador da plataforma depende deles.</dd></dl></div>
+          <div class="cartao fonte"><span class="selo selo-real">Em uso</span><h3>Oracle Autonomous Database</h3><dl><dt>Origem</dt><dd>Prazo60DB (OCI São Paulo), carga completa por scripts SQL (staging → dimensões → fatos).</dd><dt>Status</dt><dd>Mesmos 45.416 casos; acesso previsto via backend.</dd></dl></div>
+        </div>
+      </div>
+
+      <div class="aba-painel" data-aba="pipeline" hidden>
+        <div class="cartao">
+          <p class="cartao-pergunta">Pipeline de dados</p>
+          <ol class="pipeline">
+            <li><b>Fontes oficiais</b><span>Painel-Oncologia, CNES, IBGE</span></li>
+            <li><b>Ingestão</b><span>Extratos CSV / XLSX</span></li>
+            <li><b>Tratamento</b><span>Python · regras de validade</span></li>
+            <li><b>Padronização</b><span>IBGE 6 dígitos, CNES 7, datas</span></li>
+            <li><b>Validação</b><span>Conferência 34/34 DRS</span></li>
+            <li><b>Banco de dados</b><span>Oracle ADB · base minimizada</span></li>
+            <li><b>Indicadores</b><span>API agregada com supressão</span></li>
+            <li><b>Dashboard</b><span>Esta plataforma</span></li>
+            <li><b>Apoio à decisão</b><span>Alertas, localizador, simulação</span></li>
+          </ol>
+        </div>
+        <div class="cartao">
+          <p class="cartao-pergunta">Arquitetura tecnológica</p>
+          <div class="camadas">
+            <div><b>Dados</b><span>DATASUS · Painel-Oncologia · CNES · IBGE · (SIH/SUS, RHC-INCA previstos)</span><em class="selo selo-real">Ativo</em></div>
+            <div><b>ETL</b><span>Python (etl/build_data.py) · validação automática contra números publicados</span><em class="selo selo-real">Ativo</em></div>
+            <div><b>Armazenamento</b><span>Oracle Object Storage (arquivos brutos)</span><em class="selo selo-demonstracao">Roadmap</em></div>
+            <div><b>Banco</b><span>Oracle Autonomous Database · Prazo60DB</span><em class="selo selo-real">Carregado</em></div>
+            <div><b>API</b><span>FastAPI · autenticação, agregação, supressão de células pequenas</span><em class="selo selo-real">Ativo</em></div>
+            <div><b>IA</b><span>Oracle Select AI · perfil PRAZO60_AI</span><em class="selo selo-demonstracao">Roadmap</em></div>
+            <div><b>BI</b><span>Power BI · incorporação configurável</span><em class="selo selo-estimativa">Preparado</em></div>
+            <div><b>Frontend</b><span>HTML5, CSS3, JavaScript modular, Chart.js, SVG</span><em class="selo selo-real">Ativo</em></div>
+            <div><b>Hospedagem</b><span>Render (HTTPS) · sessão HttpOnly · CSP · HSTS</span><em class="selo selo-real">Ativo</em></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="aba-painel" data-aba="qualidade" hidden>
+        <div class="grade g4 kpis" id="dados-qualidade-kpis"></div>
+        <div class="cartao"><div id="dados-qualidade-linhas"></div></div>
+      </div>
+
+      <div class="aba-painel" data-aba="indicadores" hidden>
+        <p class="nota">Universo: casos C50, sexo feminino, residência ou tratamento em SP, diagnóstico 2022–2026, com tratamento iniciado.</p>
+        <div class="grade g2" id="dados-indicadores"></div>
+      </div>
+
+      <div class="aba-painel" data-aba="privacidade" hidden>
+        <div class="grade g3">
+          <div class="cartao principio"><h3>Minimização</h3><p>O servidor guarda apenas ano/mês do diagnóstico, município, CNES, tipo de tratamento e dias. Código do caso, data de nascimento e datas exatas são removidos no ETL.</p></div>
+          <div class="cartao principio"><h3>Anonimização e pseudonimização</h3><p>A base chega sem CNS, CPF ou nome. Nenhum identificador direto existe em qualquer camada da plataforma.</p></div>
+          <div class="cartao principio"><h3>Agregação e supressão</h3><p>A API devolve apenas agregados. Grupos com menos de 10 casos têm percentuais e medianas suprimidos (“&lt;10”), reduzindo o risco de reidentificação em municípios pequenos.</p></div>
+          <div class="cartao principio"><h3>Finalidade</h3><p>Monitorar o cumprimento da Lei 12.732/2012 e apoiar gestão pública. Nenhum uso para decisão clínica individual.</p></div>
+          <div class="cartao principio"><h3>Segurança</h3><p>HTTPS, senha com hash PBKDF2, sessão assinada HttpOnly de 8 horas, limite de tentativas, CSP, proteção CSRF e nenhum segredo no navegador.</p></div>
+          <div class="cartao principio"><h3>Governança</h3><p>Fontes, fórmulas, regras de alerta e premissas de simulação documentadas e auditáveis. Repositório privado recomendado para a base minimizada.</p></div>
+        </div>
+        <div class="cartao">
+          <p class="cartao-pergunta">O que nunca é exibido</p>
+          <ul class="lista-negativa"><li>Nome de paciente</li><li>CPF</li><li>CNS</li><li>Endereço residencial</li><li>Telefone</li><li>Data de nascimento</li><li>Qualquer registro individual</li></ul>
+        </div>
+      </div>
+
+      <div class="aba-painel" data-aba="limitacoes" hidden>
+        <ol class="limitacoes">
+          <li><strong>Dados públicos possuem defasagem.</strong> O diagnóstico mais recente é de maio/2026; anos recentes ainda recebem registros.</li>
+          <li><strong>Ocupação hospitalar em tempo real não está disponível</strong> nas bases públicas utilizadas.</li>
+          <li><strong>Localização de uma unidade não significa existência de vaga.</strong></li>
+          <li><strong>Simulações são cenários hipotéticos</strong>, com premissas declaradas e ajustáveis.</li>
+          <li><strong>Recomendações não substituem a regulação oficial</strong> (CROSS-SP, DRS, gestores municipais).</li>
+          <li><strong>O sistema é uma ferramenta de apoio à decisão</strong>, não de decisão clínica.</li>
+          <li><strong>Dados individuais não são expostos</strong> em nenhuma tela, API ou exportação.</li>
+          <li><strong>Viés de casos fechados:</strong> a base só contém pacientes que já iniciaram tratamento; esperas longas ainda em curso não aparecem, o que pode subestimar o atraso nos anos mais recentes.</li>
+          <li><strong>Correlação não é causalidade:</strong> demanda/oferta e fatores relacionados indicam padrões, não causas.</li>
+          <li><strong>Oferta sem denominador populacional</strong> e distâncias em linha reta entre sedes municipais.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== 12. Sobre ===== -->
+    <section class="pagina" data-pagina="sobre" hidden>
+      <header class="pagina-cabecalho">
+        <p class="eyebrow">Sobre o Prazo60</p>
+        <h1>Diagnóstico não pode esperar. Tratamento também não.</h1>
+        <p class="lead">Um produto de dados para apoio à decisão em saúde pública, desenvolvido pelo grupo Dataholics.</p>
+      </header>
+      <div class="lei-destaque">
+        <p class="eyebrow">Base legal</p>
+        <p><strong>Lei nº 12.732/2012</strong> · o paciente com neoplasia maligna tem direito de iniciar o primeiro tratamento no SUS em até <strong>60 dias</strong> contados do diagnóstico registrado em prontuário.</p>
+      </div>
+      <div class="grade g2 sobre">
+        <div class="cartao"><h3>O problema</h3><p>Pacientes com câncer de mama diagnosticadas no SUS em São Paulo enfrentam esperas que, em grande parte dos casos, ultrapassam o limite legal. Cada semana a mais pode significar progressão da doença.</p></div>
+        <div class="cartao"><h3>Contexto</h3><p>O câncer de mama é o mais incidente entre mulheres no Brasil. Dados públicos existem, mas estão dispersos e raramente chegam ao gestor como resposta a perguntas práticas.</p></div>
+        <div class="cartao"><h3>Objetivo</h3><p>Responder se as pacientes iniciam o tratamento em 60 dias e, quando não, onde o problema acontece, que fatores se relacionam a ele e quais alternativas podem ser avaliadas.</p></div>
+        <div class="cartao"><h3>Metodologia</h3><p>45.416 casos C50 (2022–2026) do Painel-Oncologia, cruzados com oferta habilitada, CNES e malha municipal do IBGE; indicadores com fórmulas públicas e validação automática.</p></div>
+        <div class="cartao"><h3>Arquitetura</h3><p>ETL em Python, Oracle Autonomous Database, API FastAPI com autenticação e agregação, frontend modular, Power BI e Select AI como camadas de aprofundamento.</p></div>
+        <div class="cartao"><h3>Impacto esperado</h3><p>Priorização mais rápida de regiões críticas, discussão de pactuações regionais baseada em evidência e transparência sobre o cumprimento de um direito das pacientes.</p></div>
+        <div class="cartao"><h3>Ética</h3><p>Somente dados agregados, supressão de grupos pequenos, identificação clara do que é real, estimado ou simulado, e limitações sempre visíveis.</p></div>
+        <div class="cartao"><h3>Fontes</h3><p>Painel-Oncologia (INCA/DATASUS), CNES, deliberações CIB-SP, IBGE. SIH/SUS e RHC/INCA previstos.</p></div>
+      </div>
+      <div class="equipe cartao">
+        <img src="assets/equipe-dataholics.jpg" alt="Equipe Dataholics: Amanda, Gabriela, Julia, Livia e Eduardo" width="957" height="478" loading="lazy">
+        <div><p class="eyebrow">Equipe</p><h3>Dataholics</h3><p>Amanda, Eduardo, Gabriela, Julia e Livia.</p><p class="nota">“Nós não usamos dados apenas para mostrar o problema. Usamos dados para entender o problema e apoiar a construção da solução.”</p></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer class="rodape">
+  <span>Prazo60 · Dataholics</span>
+  <span>Fonte: Painel-Oncologia (INCA/DATASUS), CNES, CIB-SP, IBGE · somente dados agregados</span>
+  <span>Ferramenta de apoio à decisão · não substitui a regulação oficial</span>
+</footer>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-titulo" hidden>
+  <div class="modal-caixa">
+    <button class="modal-fechar" id="modal-fechar" type="button" aria-label="Fechar">×</button>
+    <h2 id="modal-titulo"></h2>
+    <div id="modal-corpo"></div>
+  </div>
+</div>
+
+<div class="apresentacao" id="apresentacao" hidden>
+  <button type="button" class="botao-apresentacao" id="apr-anterior">← Anterior</button>
+  <div class="apresentacao-info"><span id="apr-passo"></span><strong id="apr-titulo"></strong></div>
+  <button type="button" class="botao-apresentacao" id="apr-proximo">Próximo →</button>
+  <button type="button" class="botao-apresentacao botao-apr-sair" id="apr-sair">Sair (Esc)</button>
+</div>
+
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script src="js/vendor/chart.umd.min.js"></script>
+<script src="js/core.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/map.js"></script>
+<script src="js/views/inicio.js"></script>
+<script src="js/views/executiva.js"></script>
+<script src="js/views/panorama.js"></script>
+<script src="js/views/demanda.js"></script>
+<script src="js/views/mapa.js"></script>
+<script src="js/views/gargalos.js"></script>
+<script src="js/views/encaminhar.js"></script>
+<script src="js/views/simulacao.js"></script>
+<script src="js/views/powerbi.js"></script>
+<script src="js/views/ia.js"></script>
+<script src="js/views/dados.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

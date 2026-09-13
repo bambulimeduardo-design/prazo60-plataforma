@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Entrar · Prazo60</title>
+<link rel="icon" type="image/png" href="/public/assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="/public/login.css">
+</head>
+<body>
+<main class="login">
+  <section class="login-marca" aria-hidden="true">
+    <div class="login-marca-conteudo">
+      <p class="login-eyebrow">Centro de Inteligência em Saúde Pública</p>
+      <h2>Diagnóstico não pode esperar.<br>Tratamento também não.</h2>
+      <p class="login-lei">Lei nº 12.732/2012 · até 60 dias entre o diagnóstico confirmado e o início do tratamento oncológico no SUS.</p>
+      <ol class="login-cadeia">
+        <li>Dados</li><li>Diagnóstico</li><li>Gargalo</li><li>Alternativa</li><li>Simulação</li><li>Decisão</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="login-painel">
+    <div class="login-caixa">
+      <img src="/public/assets/logo-prazo60-256.png" alt="Prazo60 · Cuidar hoje, viver amanhã" class="login-logo" width="112" height="115">
+      <h1>Acesso à plataforma</h1>
+      <p class="login-sub">Ambiente restrito do grupo Dataholics.</p>
+
+      <form id="form-login" novalidate>
+        <label for="usuario">Usuário</label>
+        <input id="usuario" name="usuario" type="text" autocomplete="username" autocapitalize="characters" spellcheck="false" maxlength="64" required autofocus>
+
+        <label for="senha">Senha</label>
+        <div class="campo-senha">
+          <input id="senha" name="senha" type="password" autocomplete="current-password" maxlength="128" required>
+          <button type="button" id="alternar-senha" class="alternar-senha" aria-label="Mostrar senha" aria-pressed="false">Mostrar</button>
+        </div>
+        <p class="aviso-caps" id="aviso-caps" hidden>Caps Lock ativado</p>
+
+        <p class="login-erro" id="login-erro" role="alert" hidden></p>
+
+        <button type="submit" class="botao-entrar" id="botao-entrar">Entrar</button>
+      </form>
+
+      <ul class="login-garantias">
+        <li>Conexão protegida e sessão expira em 8 horas</li>
+        <li>Somente dados agregados, sem identificação de pacientes</li>
+      </ul>
+    </div>
+    <p class="login-rodape">Prazo60 · Dataholics · Fonte: Painel-Oncologia (INCA/DATASUS)</p>
+  </section>
+</main>
+<script src="/public/login.js"></script>
+</body>
+</html>
