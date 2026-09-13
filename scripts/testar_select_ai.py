@@ -60,7 +60,7 @@ def perfil_existe():
 
 etapa("Conexao", lambda: query_one("SELECT USER AS usuario, SYS_CONTEXT('USERENV', 'DB_NAME') AS banco FROM dual"))
 etapa("Perfil no schema deste usuario", perfil_existe)
-etapa("Acesso aos dados", lambda: query_one("SELECT COUNT(*) AS casos FROM ADMIN.TB_TRATAMENTO"))
+etapa("Acesso aos dados agregados (esperado 45416)", lambda: query_one("SELECT SUM(CASOS) AS casos FROM ADMIN.VW_P60_RESUMO_ANO"))
 r = etapa("Select AI (showsql + narrate)", lambda: perguntar("Quantos casos ultrapassaram o prazo de 60 dias?", perfil))
 print("\nSQL gerado:\n", r["sql_gerado"])
 print("\nResposta:\n", r["resposta"])

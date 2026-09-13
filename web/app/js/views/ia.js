@@ -3,14 +3,15 @@
 
 (function (P60) {
   const u = P60.u;
-  // Perguntas que a base Oracle consegue responder (casos, tratamentos, municipios, DRS, unidades).
+  // Perguntas cobertas pelas views analiticas VW_P60_* do banco (07_camada_analitica_select_ai.sql).
   const SUGESTOES = [
     'Quantos casos ultrapassaram o prazo de 60 dias?',
-    'Quais os 5 municípios com mais casos acima de 60 dias?',
-    'Qual DRS tem a maior média de dias de espera?',
-    'Quantos casos acima de 60 dias houve por ano de diagnóstico?',
-    'Qual tipo de tratamento tem a maior média de dias de espera?',
-    'Quais as 5 unidades de saúde com mais casos acima de 60 dias?',
+    'Qual região (DRS) mais piorou entre 2024 e 2025?',
+    'Como o percentual acima de 60 dias variou nos últimos 6 meses?',
+    'Onde existe maior pressão entre demanda e oferta?',
+    'Quais os 10 municípios com maior percentual acima de 60 dias?',
+    'Quais unidades ficam na mesma DRS dos municípios mais críticos?',
+    'Qual tipo de tratamento tem a maior mediana de dias de espera?',
   ];
   const APIS = [
     ['API de dados', '/api/painel', 'Indicadores agregados com filtros e supressão de grupos pequenos', 'real', 'Ativa'],
@@ -58,7 +59,9 @@
       const corpo = erro.corpo || {};
       pendente.innerHTML = corpo.status === 'nao_configurado'
         ? `<strong>Integração Oracle Select AI: roadmap técnico.</strong><p>${u.esc(corpo.detail)}</p><p class="nota">Para ativar: ${corpo.requisitos.map(u.esc).join(' · ')}</p>`
-        : `<strong>Não foi possível responder.</strong><p>${u.esc(erro.message)}</p>`;
+        : `<strong>Não foi possível responder.</strong><p>${u.esc(erro.message)}</p>${erro.status === 422
+          ? `<p class="nota">Perguntas que a base responde bem:</p><div class="chat-sugestoes">${SUGESTOES.slice(0, 4).map((s) => `<button type="button" data-sugestao="${u.esc(s)}">${u.esc(s)}</button>`).join('')}</div>`
+          : ''}`;
     } finally {
       botao.disabled = false;
     }
@@ -76,6 +79,10 @@
 
       u.html(u.$('#ia-sugestoes'), SUGESTOES.map((s) => `<button type="button">${u.esc(s)}</button>`).join(''));
       u.$('#ia-sugestoes').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { u.$('#ia-pergunta').value = b.textContent; u.$('#ia-pergunta').focus(); } });
+      u.$('#ia-historico').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-sugestao]');
+        if (b) { u.$('#ia-pergunta').value = b.dataset.sugestao; u.$('#ia-pergunta').focus(); }
+      });
       u.$('#ia-form').addEventListener('submit', (e) => { e.preventDefault(); perguntar(u.$('#ia-pergunta').value); u.$('#ia-pergunta').value = ''; });
 
       const ev = P60.dados.referencia.select_ai_evidencia;
