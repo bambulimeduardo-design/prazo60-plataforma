@@ -9,6 +9,14 @@ população feminina, Estado de São Paulo.
 A plataforma percorre a cadeia **dados → diagnóstico → gargalo → alternativa → simulação → decisão**
 e identifica em toda tela o que é **dado real**, **estimativa**, **simulação**, **projeção** ou **demonstração**.
 
+Projeto do **Enterprise Challenge Oracle x FIAP** (turma 1TSCPV), avaliado pela banca da Oracle.
+
+| Recurso | Link |
+|---|---|
+| Plataforma web (produção) | https://prazo60.onrender.com |
+| Painel Power BI | [Painel Câncer de Mama SP](https://app.powerbi.com/groups/me/reports/0a799b85-3b20-4162-81b6-d3a61ba73ff7/d1bb6caba29ffc924e85?experience=power-bi) |
+| Entregas das Sprints 1 a 4 | [`entregas/`](entregas/) |
+
 - Requisitos e rastreabilidade: [`docs/REQUISITOS.md`](docs/REQUISITOS.md)
 - Colocar online (Render): [`docs/DEPLOY_RENDER.md`](docs/DEPLOY_RENDER.md)
 - Power BI e Oracle Select AI: [`docs/INTEGRACOES.md`](docs/INTEGRACOES.md)
@@ -102,7 +110,25 @@ SQL de municípios e unidades, `js/data.js` do site anterior) e as coordenadas m
 - `etl/relatorio_validacao.md`: KPI geral e 34 indicadores por DRS conferidos com o site anterior (0 divergências).
 
 A API só devolve agregados. Grupos com menos de 10 casos têm percentual e mediana suprimidos.
-Mantenha o repositório **privado**.
+Nenhum arquivo com dados individuais de pacientes (data de nascimento, datas exatas) é versionado.
+
+## Entregas das Sprints (`entregas/`)
+
+Este repositório unifica a plataforma e o repositório das Sprints 1 a 3
+([AmandaBarral/Prazo60_Dataholics](https://github.com/AmandaBarral/Prazo60_Dataholics)), com os commits
+originais preservados, e o relatório técnico da Sprint 4.
+
+| Pasta | Conteúdo |
+|---|---|
+| `entregas/SPRINT_01` | Ideação do projeto |
+| `entregas/SPRINT_02` | Arquitetura da solução |
+| `entregas/SPRINT_03` | Entregas por disciplina: SQL (DDL/DML e `VW_FILA_PRAZO`), pipeline `pipeline_datasus.py`, notebook de ML, evidências de arquitetura e relatório de governança OES |
+| `entregas/SPRINT_04` | Relatório técnico (Power BI, arquitetura Lambda, indicadores) |
+
+Por LGPD, na unificação ficaram de fora os extratos com dados individuais (`POBR_SP_Mama_Tratado 1.csv`,
+`POBR_SP_Mama_Tratado.xlsx`, `RAW_PAINEL_ONCOLOGIA_consolidado.xlsx`), as datas de nascimento do script DML
+foram generalizadas para 01/01 do ano e a saída de `df_pobr.head()` do notebook foi limpa. Os microdados
+podem ser obtidos no FTP público do DATASUS: `ftp://ftp.datasus.gov.br/dissemin/publicos/painel_oncologia/Dados/`.
 
 ## O que mudou em relação à versão anterior
 
