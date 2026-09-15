@@ -1,5 +1,6 @@
-// Prazo60 - Power BI: incorporacao configurada no servidor (POWERBI_EMBED_URL).
-// Fallback: se o servidor nao fornecer a URL, usa o link publico "Publicar na web".
+// Prazo60 - Power BI: usa o link publico "Publicar na web" (abre sem login).
+// A URL publica tem prioridade sobre POWERBI_EMBED_URL do servidor, que aponta
+// para a incorporacao segura (reportEmbed) e exigia login Microsoft.
 
 (function (P60) {
   const u = P60.u;
@@ -10,7 +11,6 @@
 
   function resolverConfig(cfg) {
     const base = cfg || {};
-    if (base.url) return base;
     return {
       titulo: base.titulo || 'Painel Câncer de Mama SP',
       url: URL_PUBLICA,
