@@ -1,8 +1,22 @@
-// Prazo60 - Power BI: incorporacao configurada no servidor (POWERBI_EMBED_URL). Sem iframe falso.
+// Prazo60 - Power BI: incorporacao configurada no servidor (POWERBI_EMBED_URL).
+// Fallback: se o servidor nao fornecer a URL, usa o link publico "Publicar na web".
 
 (function (P60) {
   const u = P60.u;
   let montado = false;
+
+  // Link publico do relatorio (Publicar na web). Abre sem login.
+  const URL_PUBLICA = 'https://app.powerbi.com/view?r=eyJrIjoiZjY2NzhjMTUtNmFhMy00OWY4LWFjN2YtOTViOWY1ZDNlYzYxIiwidCI6IjExZGJiZmUyLTg5YjgtNDU0OS1iZTEwLWNlYzM2NGU1OTU1MSIsImMiOjR9';
+
+  function resolverConfig(cfg) {
+    const base = cfg || {};
+    if (base.url) return base;
+    return {
+      titulo: base.titulo || 'Painel Câncer de Mama SP',
+      url: URL_PUBLICA,
+      modo: 'publico',
+    };
+  }
 
   function vazio() {
     return `<div class="pbi-vazio">
@@ -13,7 +27,8 @@
     </div>`;
   }
 
-  function montar(cfg) {
+  function montar(cfgOriginal) {
+    const cfg = resolverConfig(cfgOriginal);
     const area = u.$('#pbi-area');
     u.$('#pbi-titulo').textContent = cfg.titulo || 'Relatório Power BI';
     if (!cfg.url) { area.innerHTML = vazio(); return; }
